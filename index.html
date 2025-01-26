@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="David Vu | Personal Website" />
+    <title>Tỏ tình | Our Connection 💫</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" defer/>
+    <style>
+      :root {
+        --main-pink: #ff69b4;
+        --secondary-pink: #ff94c2;
+        --gradient-start: #ff9a9e;
+        --gradient-end: #fad0c4;
+      }
+
+      * {
+        user-select: none;
+      }
+
+      body {
+        background: linear-gradient(
+          45deg,
+          var(--gradient-start),
+          var(--gradient-end)
+        );
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-family: "Arial", sans-serif;
+        cursor: default;
+      }
+
+      .stepper-wrapper {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 800px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 10px 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .stepper-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        transition: all 0.3s ease;
+      }
+
+      .stepper-item::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        left: -50%;
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        z-index: -1;
+      }
+
+      .stepper-item.completed::before {
+        background: var(--main-pink);
+      }
+
+      .stepper-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: var(--main-pink);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .stepper-item.active .stepper-circle {
+        transform: scale(1.2);
+        background: var(--main-pink);
+        color: white;
+      }
+
+      .stepper-label {
+        margin-top: 8px;
+        color: white;
+        font-size: 0.9rem;
+        text-align: center;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      .step {
+        display: none;
+        min-height: 100vh;
+        padding: 100px 15px 60px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s ease;
+      }
+
+      .step.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .love-card {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        margin: auto;
+        max-width: 800px;
+        position: relative;
+        transition: all 0.4s ease;
+        overflow: hidden;
+      }
+
+      .btn-pink {
+        background-color: var(--main-pink);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-pink::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all 0.5s ease;
+      }
+
+      .btn-pink:hover::before {
+        left: 100%;
+      }
+
+      .btn-pink:hover {
+        transform: scale(1.05);
+      }
+
+      .particle {
+        position: fixed;
+        pointer-events: none;
+        border-radius: 50%;
+        animation: particle-float 3s ease-out forwards;
+        z-index: 1000;
+      }
+
+      @keyframes particle-float {
+        0% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-100vh) scale(0);
+        }
+      }
+
+      #noButton {
+        transition: all 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .stepper-wrapper {
+          width: 90%;
+          top: 10px;
+          padding: 8px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="bgMusic" loop style="display: none" muted autoplay>
+      <source src="http://davidbisky.io.vn/bg-music.mp3" type="audio/mpeg" />
+    </audio>
+    <!-- Stepper -->
+    <div class="stepper-wrapper">
+      <div class="stepper-item completed" id="stepper1">
+        <div class="stepper-circle">1</div>
+        <span class="stepper-label">Moments</span>
+      </div>
+      <div class="stepper-item" id="stepper2">
+        <div class="stepper-circle">2</div>
+        <span class="stepper-label">Feelings</span>
+      </div>
+      <div class="stepper-item" id="stepper3">
+        <div class="stepper-circle">3</div>
+        <span class="stepper-label">Possibility</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Shared Moments -->
+    <div class="step active" id="step1">
+      <div class="love-card">
+        <h1 class="display-4 text-center mb-4">Cuộc gặp gỡ 💫</h1>
+        <div class="row g-4 align-items-center">
+          <div class="col-md-6">
+            <img
+              src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-1/428657549_332564276429799_565348115457565756_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeGhrEJQIv0sUj6FYvzvY1X58tyqEY_1M6jy3KoRj_UzqO72Ah6sl_yeBxR9vhp2BzT4sc8Izd49iFsB3mpPWCpY&_nc_ohc=kKnuy2WEZiQQ7kNvgHPV1V4&_nc_oc=AdghaXKDN7sh-0A87tKjnjJjn92wRzF97ndwMTXVU0UtGnfE_PVxlWPKo_jTeyiFXdxmxsVySHZWFWKHaNMNIAtX&_nc_zt=24&_nc_ht=scontent.fsgn2-7.fna&_nc_gid=AbFj6Ebm6TRgiSq2uu_aCWI&oh=00_AYD_PcnoDS5Hgpcvx7ZVX2Uc5AjnhyssXjQQWWVibcelGw&oe=679C214B"
+              class="img-fluid rounded-3 shadow"
+              alt="Shared moments" loading="eager" width="auto" height="300"/>
+          </div>
+          <div class="col-md-6">
+            <p class="lead">
+              Every moment we've shared has been special to me... When I first
+              met you through our university group and left that comment about
+              computer science, I never imagined it would lead to this. Oh my,
+              you've made me reconsider my path between becoming a general
+              doctor and an IT-er. You look so brilliant with your minimalist
+              style. It was love at first sight.
+            </p>
+            <button class="btn btn-pink mt-3" onclick="nextStep(2)">
+              Continue →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: My Feelings -->
+    <div class="step" id="step2">
+      <div class="love-card">
+        <h1 class="display-4 text-center mb-4">What I Feel 💕</h1>
+        <div class="row g-4 align-items-center">
+          <div class="col-md-6">
+            <p class="lead">
+              I've realized something important about how I feel about you
+              through our conversations during activities on social media.
+              Messenger was my best choice ever for contact. I'm so excited
+              about the girl known as the mighty girl, expressed by "Ê, anh...",
+              such a caller doom. Yahooo, I'm so excited to get in with you for
+              a while. Many emotions run through my heart that I don't know how
+              to express it shouted!! You used to want me to be surprised,
+              indeed it was even more difficult to go to heaven because he was
+              so serious that he didn't care about life. Haha, now let's go to
+              the last section. Huagray, I'm so fantastic to see it with you~
+            </p>
+            <button class="btn btn-pink mt-3" onclick="nextStep(3)">
+              Next →
+            </button>
+          </div>
+          <div class="col-md-6">
+            <img
+              src="http://davidbisky.io.vn/em.jpg"
+              class="img-fluid rounded-3 shadow"
+              alt="Heartfelt moment" loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Confession -->
+    <div class="step" id="step3">
+      <div class="love-card">
+        <h1 class="display-4 text-center mb-4">My Confession 💬❤️🎆</h1>
+        <div class="text-center position-relative" id="buttonContainer">
+          <p class="lead mb-4">
+            (Lời tỏ tình mộc mạc đơn sơ) I really like you. Would you be
+            interested in getting to know each other better?<br />
+            <q>
+              Anh chỉ có một tình yêu thứ nhất <br />
+              Đem cho em kèm với một lá thư <br />
+              Em không lấy là tình anh đã mất <br />Tình đã cho không lấy lại
+              bao giờ
+            </q>
+          </p>
+          <div class="d-flex justify-content-center gap-3">
+            <button class="btn btn-pink btn-lg" onclick="handleResponse(true)">
+              Yes
+            </button>
+            <button
+              id="noButton"
+              class="btn btn-outline-secondary btn-lg"
+              onmouseover="moveButton(event)"
+              onclick="handleResponse(false)"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Music handling with better browser compatibility
+      const bgMusic = document.getElementById("bgMusic");
+      let audioStarted = false;
+
+      // Enable audio after first user interaction
+      function initAudio() {
+        if (audioStarted) return;
+
+        bgMusic.muted = false;
+        bgMusic
+          .play()
+          .then(() => (audioStarted = true))
+          .catch((error) => console.log("Audio playback error:", error));
+      }
+
+      // Capture various user interaction events
+      const events = ["click", "touchstart", "keydown"];
+      events.forEach((event) => {
+        document.addEventListener(event, initAudio, { once: true });
+      });
+
+      // Handle tab visibility changes
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          bgMusic.pause();
+        } else if (audioStarted) {
+          bgMusic.play();
+        }
+      });
+
+      // Preload audio (optional)
+      bgMusic.load();
+
+      // Start stepper from script davidbisky
+      let currentStep = 1;
+      const totalSteps = 3;
+      let moveAttempts = 0;
+
+      function updateStepper() {
+        document.querySelectorAll(".stepper-item").forEach((item, index) => {
+          item.classList.toggle("completed", index < currentStep);
+          item.classList.toggle("active", index + 1 === currentStep);
+        });
+      }
+
+      function createParticles(count = 10, type = "heart") {
+        const colors = ["#ff69b4", "#ff94c2", "#ffa7c4"];
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+
+          // Randomize particle properties
+          particle.style.width = `${Math.random() * 10 + 5}px`;
+          particle.style.height = particle.style.width;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          // Add content for heart type
+          if (type === "heart") {
+            particle.innerHTML = ["💫", "💕", "💗"][
+              Math.floor(Math.random() * 3)
+            ];
+            particle.style.fontSize = `${Math.random() * 20 + 10}px`;
+          }
+
+          // Randomize animation
+          particle.style.animationDuration = `${Math.random() * 2 + 1}s`;
+          particle.style.animationDelay = `${Math.random() * 1}s`;
+
+          document.body.appendChild(particle);
+
+          // Remove particle after animation
+          setTimeout(() => {
+            document.body.removeChild(particle);
+          }, 3000);
+        }
+      }
+
+      function moveButton(event) {
+        const container = document.getElementById("buttonContainer");
+        const containerRect = container.getBoundingClientRect();
+        const button = event.target;
+
+        // Increase difficulty of moving button
+        moveAttempts++;
+        const maxAttempts = 5;
+
+        // Calculate movement range
+        const maxX = containerRect.width - button.offsetWidth;
+        const maxY = containerRect.height - button.offsetHeight;
+
+        // Randomize position with increasing complexity
+        const randomX = Math.floor(Math.random() * maxX);
+        const randomY = Math.floor(Math.random() * maxY);
+
+        // Style button to move
+        button.style.position = "absolute";
+        button.style.left = `${randomX}px`;
+        button.style.top = `${randomY}px`;
+
+        // Add playful shake if too many attempts
+        if (moveAttempts > maxAttempts) {
+          button.style.animation = "shake 0.5s";
+          setTimeout(() => {
+            button.style.animation = "";
+          }, 500);
+        }
+
+        // Create particle effect
+        createParticles(5);
+      }
+
+      function nextStep(stepNumber) {
+        createParticles(15);
+        document
+          .getElementById(`step${currentStep}`)
+          .classList.remove("active");
+        currentStep = stepNumber;
+        document.getElementById(`step${currentStep}`).classList.add("active");
+        updateStepper();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function handleResponse(isYes) {
+        createParticles(20);
+        const finalStep = document.getElementById("step3");
+
+        if (isYes) {
+          finalStep.innerHTML = `
+                    <div class="love-card text-center">
+                        <h1 class="display-4 mb-4">Amazing! 💫</h1>
+                        <p class="lead">I'm looking forward to getting to know you better. Hẹn em dịp khi nào rảnh cùng anh đi cafeee nhe~. Xin phép được gọi em là cục cưng bé xinh~</p>
+                        <button class="btn btn-pink mt-3" onclick="window.location.href='https://facebook.com/here.davidbisky';">
+              Chat with me!
+            </button>
+                    </div>
+                `;
+        } else {
+          finalStep.innerHTML = `
+                    <div class="love-card text-center">
+                        <h1 class="display-4 mb-4">Oh no! 😢</h1>
+                        <p class="lead">I understand. If you change your mind, I'll be here. Have a great day!</p>
+                    </div>
+                `;
+        }
+      }
+
+      // Add global particle hover effect
+      document.addEventListener("mousemove", (e) => {
+        if (Math.random() < 0.1) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          particle.style.left = `${e.clientX}px`;
+          particle.style.top = `${e.clientY}px`;
+          particle.style.width = `${Math.random() * 5 + 3}px`;
+          particle.style.height = particle.style.width;
+          particle.style.backgroundColor = ["#ff69b4", "#ff94c2", "#ffa7c4"][
+            Math.floor(Math.random() * 3)
+          ];
+          document.body.appendChild(particle);
+
+          setTimeout(() => {
+            document.body.removeChild(particle);
+          }, 3000);
+        }
+      });
+
+      updateStepper();
+    </script>
+  </body>
+</html>
